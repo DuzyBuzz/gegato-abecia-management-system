@@ -1,0 +1,25 @@
+.menu-item {
+  @apply block w-full text-left px-4 py-2 rounded hover:bg-slate-100 transition;
+}
+
+.dropdown-item {
+  @apply w-full text-left px-4 py-2 rounded hover:bg-slate-100 transition;
+}
+
+.menu-dropdown {
+  @apply absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg
+         opacity-0 invisible group-hover:opacity-100 group-hover:visible
+         transition z-50;
+}
+
+/* PRINT SAFE */
+@media print {
+  nav,
+  .fixed {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+}

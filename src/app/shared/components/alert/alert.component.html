@@ -1,0 +1,4 @@
+<div class="alert" [class]="'alert-' + type">
+  <span *ngIf="showIcon" class="alert-icon">{{ getIcon() }}</span>
+  <span class="alert-message">{{ message }}</span>
+</div>

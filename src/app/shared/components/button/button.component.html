@@ -1,0 +1,12 @@
+<button
+  [type]="type"
+  class="app-btn"
+  [class.full]="fullWidth"
+  [class.primary]="variant === 'primary'"
+  [class.secondary]="variant === 'secondary'"
+  [disabled]="disabled || loading"
+  (click)="onClick($event)"
+>
+  <ng-content></ng-content>
+  <app-spinner *ngIf="loading" class="btn-spinner"></app-spinner>
+</button>

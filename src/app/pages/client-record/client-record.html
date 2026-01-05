@@ -1,0 +1,162 @@
+<!-- Header Section -->
+<div class="mb-8">
+</div>
+
+    <!-- Records Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="p-6 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="text-xl font-bold text-slate-900">Contracts Record</h3>
+        <div class="gap-4 flex">
+        <button  class="bg-blue-700 text-white px-6 py-2 rounded">
+          🖨️ Print Record
+
+        </button>
+
+        </div>
+
+      </div>
+
+      <!-- Funeral Contract Modal Component -->
+      <!-- Search Bar -->
+      <div class="px-6 pt-6 pb-6">
+        <app-table-search 
+          [tableId]="tableId"
+          [sortColumn]="'dateOfDeath'"
+          (search)="onSearch($event)"
+          (clear)="onClearSearch()">
+        </app-table-search>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full" [ngSwitch]="false">
+          <thead class="bg-slate-100 border-b border-slate-200">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="caseNo"
+                  >
+                Contract No. 
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="deceasedName"
+                 >
+                Deceased Name 
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="familyContact"
+                 >
+                Contractee 
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="phone"
+                  >
+                Phone 
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="dateOfDeath"
+                  >
+                Date of Death 
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900 cursor-pointer hover:bg-slate-200 transition-colors group"
+                  appColumnHeader="status"
+                  (columnFilter)="onColumnFilter($event)">
+                Status <span class="text-xs ml-2">⚙️</span>
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Actions</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Print</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="tableState$ | async as state">
+              <tr *ngFor="let record of getDisplayRecords(state)" class="border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 text-sm font-semibold text-slate-900">
+                  <input *ngIf="editingId === record.id" 
+                         [(ngModel)]="editingRecord.caseNo" 
+                         class="w-full px-2 py-1 border border-slate-300 rounded"
+                         type="text">
+                  <span *ngIf="editingId !== record.id">{{ record.caseNo }}</span>
+                </td>
+                <td class="px-6 py-4 text-sm text-slate-900 font-medium">
+                  <input *ngIf="editingId === record.id" 
+                         [(ngModel)]="editingRecord.deceasedName" 
+                         class="w-full px-2 py-1 border border-slate-300 rounded"
+                         type="text">
+                  <span *ngIf="editingId !== record.id">{{ record.deceasedName }}</span>
+                </td>
+                <td class="px-6 py-4 text-sm text-slate-600">
+                  <input *ngIf="editingId === record.id" 
+                         [(ngModel)]="editingRecord.familyContact" 
+                         class="w-full px-2 py-1 border border-slate-300 rounded"
+                         type="text">
+                  <span *ngIf="editingId !== record.id">{{ record.familyContact }}</span>
+                </td>
+                <td class="px-6 py-4 text-sm text-slate-600">
+                  <input *ngIf="editingId === record.id" 
+                         [(ngModel)]="editingRecord.phone" 
+                         class="w-full px-2 py-1 border border-slate-300 rounded"
+                         type="text">
+                  <span *ngIf="editingId !== record.id">{{ record.phone }}</span>
+                </td>
+                <td class="px-6 py-4 text-sm text-slate-600">
+                  <input *ngIf="editingId === record.id" 
+                         [(ngModel)]="editingRecord.dateOfDeath" 
+                         class="w-full px-2 py-1 border border-slate-300 rounded"
+                         type="date">
+                  <span *ngIf="editingId !== record.id">{{ record.dateOfDeath }}</span>
+                </td>
+                <td class="px-6 py-4 text-sm">
+                  <select *ngIf="editingId === record.id" 
+                          [(ngModel)]="editingRecord.status"
+                          class="px-2 py-1 border border-slate-300 rounded text-xs font-semibold">
+                    <option>Active</option>
+                    <option>Completed</option>
+                  </select>
+                  <span *ngIf="editingId !== record.id"
+                        class="inline-block px-3 py-1 rounded-full text-xs font-semibold"
+                        [ngClass]="{
+                          'bg-blue-100 text-blue-800': record.status === 'Active',
+                          'bg-green-100 text-green-800': record.status === 'Completed'
+                        }">
+                    {{ record.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-sm space-x-2">
+                  <button *ngIf="editingId !== record.id"
+                          (click)="startEdit(record)"
+                          class="text-blue-600 hover:text-blue-800 font-semibold">Edit</button>
+                  <button *ngIf="editingId === record.id"
+                          (click)="saveEdit(record)"
+                          class="text-green-600 hover:text-green-800 font-semibold">Save</button>
+                  <button *ngIf="editingId === record.id"
+                          (click)="cancelEdit()"
+                          class="text-gray-600 hover:text-gray-800 font-semibold">Cancel</button>
+                  <button *ngIf="editingId !== record.id"
+                          (click)="deleteRecord(record)"
+                          class="text-red-600 hover:text-red-800 font-semibold">Delete</button>
+                </td>
+
+
+                                <td class="px-6 py-4 text-sm">
+                      <select class="border w-full px-2 py-1 text-xs sm:text-sm">
+                <option value="">Select to Print</option>
+                <option routerLink="/forms/funeral-service-contract">Funeral Service Contract</option>
+                <option value="wooden-deluxe">Cremation Certificate</option>
+                <option value="wooden-premium">Authority to Cremate Remains</option>
+                <option value="metal-standard">Statement of Accounts</option>
+              </select>
+
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Filter Menu -->
+    <app-filter-menu 
+      *ngIf="filterMenu.isOpen"
+      [column]="filterMenu.column"
+      [position]="filterMenu.position"
+      [tableId]="tableId"
+      (onClose)="closeFilterMenu()">
+    </app-filter-menu>

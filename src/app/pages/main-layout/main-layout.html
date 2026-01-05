@@ -1,0 +1,237 @@
+<div class="min-h-screen bg-slate-100 w-full">
+
+  <!-- NAVBAR -->
+  <nav
+    class="
+      fixed top-0 left-0 right-0
+      h-20 z-50
+      bg-[#3A1247] text-white
+      shadow-lg
+    "
+  >
+    <div class="h-full px-6 flex items-center justify-between">
+
+      <!-- LOGO + TITLE -->
+      <div class="flex items-center gap-4">
+        <img
+          src="assets/images/gegato-logo.jpg"
+          alt="Gegato Abecia Logo"
+          class="w-12 h-12 object-cover"
+        />
+
+        <div class="leading-tight">
+          <h1 class="text-lg font-bold tracking-wide">
+            Gegato Abecia
+          </h1>
+          <p class="text-xs text-white/70">
+            Funeral & Crematory Services Management System
+          </p>
+        </div>
+      </div>
+
+<!-- USER MENU -->
+<div class="relative user-menu">
+
+
+        <button
+          (click)="toggleUserMenu()"
+          class="
+            flex items-center gap-3
+            px-4 py-2 rounded-lg
+            bg-white/10 hover:bg-white/20
+            transition
+          "
+        >
+          <div
+            class="
+              w-9 h-9 rounded-full
+              bg-white text-[#3A1247]
+              flex items-center justify-center
+              font-semibold
+            "
+          >
+            {{ currentUser.name.charAt(0) }}
+          </div>
+
+          <div class="text-left hidden sm:block">
+            <p class="text-sm font-semibold">
+              {{ currentUser.name }}
+            </p>
+            <p class="text-xs text-white/70">
+              {{ currentUser.role }}
+            </p>
+          </div>
+
+          <svg class="w-4 h-4 ml-1 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- USER DROPDOWN -->
+        <div
+          *ngIf="isUserMenuOpen"
+          class="
+            absolute right-0 mt-3 w-60
+            bg-white text-slate-800
+            rounded-xl shadow-xl
+            border border-slate-200
+            overflow-hidden
+            z-50
+          "
+        >
+          <div class="p-4 bg-slate-50 border-b">
+            <p class="text-sm font-semibold">
+              {{ currentUser.name }}
+            </p>
+            <p class="text-xs text-slate-500">
+              {{ currentUser.email }}
+            </p>
+          </div>
+
+          <div class="p-2 space-y-1">
+            <button class="dropdown-item">Profile</button>
+            <button class="dropdown-item">User Roles</button>
+            <button class="dropdown-item">System Settings</button>
+          </div>
+
+          <div class="border-t p-2">
+            <button
+              (click)="logout()"
+              class="
+                w-full text-left px-4 py-2 rounded-md
+                text-red-600 hover:bg-red-50
+                font-medium transition
+              "
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- MODULE STRIP -->
+  <div
+    class="
+      fixed top-20 left-0 right-0
+      h-12 z-40
+      bg-slate-200 
+      border-b border-slate-200
+    "
+  >
+    <div class="h-full px-6 flex items-center gap-6 text-sm font-medium text-slate-700">
+
+      <!-- CONTRACTS -->
+      <div class="relative group">
+        <button class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-slate-100">
+          Contracts
+          <svg class="w-4 h-4 transition-transform group-hover:rotate-180"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div
+          class="
+            absolute left-0 mt-2 w-52
+            bg-white rounded-lg shadow-lg
+            border border-slate-200
+            opacity-0 invisible
+            group-hover:opacity-100 group-hover:visible
+            transition-all duration-150
+          "
+        >
+          <button
+            routerLink="/entry-forms/funeral-service-contract"
+            class="w-full text-left px-4 py-2 hover:bg-slate-100"
+          >
+            New Contract
+          </button>
+          
+          
+          <button 
+          routerLink="/client-record"
+          class="w-full text-left px-4 py-2 hover:bg-slate-100">
+            Contract Records
+          </button>
+        </div>
+      </div>
+
+      <!-- SOA -->
+      <div class="relative group">
+        <button class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-slate-100">
+          SOA
+          <svg class="w-4 h-4 transition-transform group-hover:rotate-180"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div
+          class="
+            absolute left-0 mt-2 w-56
+            bg-white rounded-lg shadow-lg
+            border border-slate-200
+            opacity-0 invisible
+            group-hover:opacity-100 group-hover:visible
+            transition-all duration-150
+          "
+        >
+          <button class="w-full text-left px-4 py-2 hover:bg-slate-100">
+            New Statement
+          </button>
+          <button class="w-full text-left px-4 py-2 hover:bg-slate-100">
+            Statement Records
+          </button>
+        </div>
+      </div>
+      <!-- SOA -->
+      <div class="relative group">
+        <button class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-slate-100">
+          Inventory
+          <svg class="w-4 h-4 transition-transform group-hover:rotate-180"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div
+          class="
+            absolute left-0 mt-2 w-56
+            bg-white rounded-lg shadow-lg
+            border border-slate-200
+            opacity-0 invisible
+            group-hover:opacity-100 group-hover:visible
+            transition-all duration-150
+          "
+        >
+          <button class="w-full text-left px-4 py-2 hover:bg-slate-100">
+            New Statement
+          </button>
+          <button class="w-full text-left px-4 py-2 hover:bg-slate-100">
+            Statement Records
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MAIN CONTENT -->
+  <main
+    class="
+      pt-[8.5rem]
+      px-6 py-10
+      min-h-screen
+      bg-slate-100
+    "
+  >
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
