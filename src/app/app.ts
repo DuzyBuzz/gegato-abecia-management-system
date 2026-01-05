@@ -1,10 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FuneralServiceContractPrinting } from "./printing-forms/funeral-service-contract-printing/funeral-service-contract-printing";
+import { AuthorityToCremateRemainsPrinting } from "./printing-forms/authority-to-cremate-remains-printing/authority-to-cremate-remains-printing";
+import { CremationCertificate } from "./printing-forms/cremation-certificate/cremation-certificate";
+import { StatementOfAccount } from "./printing-forms/statement-of-account/statement-of-account";
 
 @Component({
   selector: 'app-root',
-  imports: [ FuneralServiceContractPrinting],
+  imports: [FuneralServiceContractPrinting, AuthorityToCremateRemainsPrinting, CremationCertificate, StatementOfAccount],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

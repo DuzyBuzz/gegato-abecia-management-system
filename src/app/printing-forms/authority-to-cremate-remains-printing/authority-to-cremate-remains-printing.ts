@@ -2,15 +2,31 @@ import { Component } from '@angular/core';
 import { PrintHeader } from "../print-header/print-header";
 
 @Component({
-  selector: 'app-funeral-service-contract-printing',
+  selector: 'app-authority-to-cremate-remains-printing',
   imports: [PrintHeader],
-  templateUrl: './funeral-service-contract-printing.html',
+  templateUrl: './authority-to-cremate-remains-printing.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class FuneralServiceContractPrinting {
+export class AuthorityToCremateRemainsPrinting {
+  // // Mock data – replace with API response later
+  // contract = {
+  //   date: '1/2/2026',
+
+  //   authorizer: 'ALAIN DORIN',
+  //   deceasedName: 'HELEN D. DORIN',
+
+  //   dateOfDeath: 'Monday, December 29, 2025',
+  //   placeOfDeath: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
+
+  //   dateOfCremation: 'Wednesday, January 07, 2026',
+  //   time: '11:00am',
+
+  //   address: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
+  //   relationship: 'SON'
+  // };
   contract = {
     time: '11:08:13 AM',
-    date: '02-Jan-26',
+    date: '1/2/2026',
 
     casket: 'SR FLEXI METAL',
     casketDescription: 'ALL WHITE / ROSE HANDLE',
@@ -20,7 +36,7 @@ export class FuneralServiceContractPrinting {
     dob: '02-Sep-40',
     dod: '29-Dec-25',
     age: '85',
-
+authorizer: 'ALAIN DORIN',
     address: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
     placeOfDeath: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
 
@@ -28,6 +44,7 @@ export class FuneralServiceContractPrinting {
     church: 'CARMELITE SISTERS CHURCH JARO',
     burialDate: 'Wednesday, January 07, 2026',
     cemetery: 'FOREST LAKE MEMORIAL PARK',
+officer: 'Rizalina P. Panes',
 
     contractee: 'ALAIN DORIN',
     relationship: 'SON',
@@ -35,7 +52,6 @@ export class FuneralServiceContractPrinting {
     deliveryDate: 'Friday, January 02, 2026',
     contractNo: '12-013950-25'
   };
-
   print(): void {
     window.print();
   }
