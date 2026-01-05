@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FuneralServiceContractPrinting } from "./printing-forms/funeral-service-contract-printing/funeral-service-contract-printing";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ FuneralServiceContractPrinting],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

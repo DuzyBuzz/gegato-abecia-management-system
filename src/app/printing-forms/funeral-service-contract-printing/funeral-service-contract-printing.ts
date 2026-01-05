@@ -1,0 +1,41 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-funeral-service-contract-printing',
+  imports: [],
+  templateUrl: './funeral-service-contract-printing.html',
+  styleUrl: './funeral-service-contract-printing.scss',
+})
+export class FuneralServiceContractPrinting {
+  contract = {
+    time: '11:08:13 AM',
+    date: '02-Jan-26',
+
+    casket: 'SR FLEXI METAL',
+    casketDescription: 'ALL WHITE / ROSE HANDLE',
+    price: 'PHP 150,000.00',
+
+    deceasedName: 'HELEN D. DORIN',
+    dob: '02-Sep-40',
+    dod: '29-Dec-25',
+    age: '85',
+
+    address: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
+    placeOfDeath: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
+
+    wake: 'CHAPEL - E',
+    church: 'CARMELITE SISTERS CHURCH JARO',
+    burialDate: 'Wednesday, January 07, 2026',
+    cemetery: 'FOREST LAKE MEMORIAL PARK',
+
+    contractee: 'ALAIN DORIN',
+    relationship: 'SON',
+    contactNo: '0961-424-6939',
+    deliveryDate: 'Friday, January 02, 2026',
+    contractNo: '12-013950-25'
+  };
+
+  print(): void {
+    window.print();
+  }
+}
