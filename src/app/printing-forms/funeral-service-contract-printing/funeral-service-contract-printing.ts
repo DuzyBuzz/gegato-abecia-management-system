@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PrintHeader } from "../print-header/print-header";
 
 @Component({
@@ -7,7 +7,11 @@ import { PrintHeader } from "../print-header/print-header";
   templateUrl: './funeral-service-contract-printing.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class FuneralServiceContractPrinting {
+export class FuneralServiceContractPrinting  implements OnInit{
+    ngOnInit(): void {
+    window.print();
+
+  }
   contract = {
     time: '11:08:13 AM',
     date: '02-Jan-26',

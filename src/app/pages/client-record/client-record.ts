@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ViewChild  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TableFilterService, TableState } from '../../services/table-filter.service';
 import { ColumnHeaderDirective, ColumnFilterEvent } from '../../directives/column-header.directive';
@@ -29,9 +29,13 @@ imports: [CommonModule, RouterModule, RouterLink, ColumnHeaderDirective, FilterM
 export class ClientRecord implements OnInit {
   readonly tableId = 'records-table';
 
-// Correct ViewChild connection to the component
+
+
+
+
 
 // This is the only method needed to open the modal from parent
+
 
 
   showContractModal = false;
@@ -39,6 +43,7 @@ export class ClientRecord implements OnInit {
   openModal() {
     this.showContractModal = true;
   }
+
 
   closeModal() {
     this.showContractModal = false;
@@ -97,10 +102,22 @@ export class ClientRecord implements OnInit {
 
   constructor(
     private filterService: TableFilterService,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private router: Router
   ) {
     this.tableState$ = this.filterService.initializeTable(this.tableId, this.originalRecords);
   }
+
+  openBillingEntry(): void {
+
+      this.router.navigate(['/entry-forms/billing-entry'], {
+  });
+}
+  openEditContract(): void {
+
+      this.router.navigate(['/entry-forms/funeral-service-contract'], {
+  });
+}
 
   ngOnInit(): void {
   }
@@ -199,4 +216,31 @@ export class ClientRecord implements OnInit {
     // Apply the filtered results to the service
     this.filterService.initializeTable(this.tableId, filtered);
   }
+  onPrintSelect(event: Event): void {
+  const value = (event.target as HTMLSelectElement).value;
+
+  switch (value) {
+    case 'funeral-contract':
+      this.router.navigate(['/printing-forms/funeral-service-contract']);
+      break;
+
+    case 'cremation-certificate':
+      this.router.navigate(['/printing-forms/cremation-certificate']);
+      break;
+
+    case 'authority-cremate':
+      this.router.navigate(['/printing-forms/authority-to-cremate-remains']);
+      break;
+
+    case 'statement-account':
+      this.router.navigate(['/printing-forms/statement-of-account']);
+      break;
+
+    default:
+      return;
+  }
+
+  // reset dropdown after navigation (important UX)
+  (event.target as HTMLSelectElement).value = '';
+}
 }

@@ -16,7 +16,7 @@ export interface SearchFilter {
   template: `
     <div class="flex flex-col gap-4">
       <!-- Search Row -->
-      <div class="flex items-end gap-3 flex-wrap">
+      <div class="flex items-end gap-4 flex-wrap">
         <!-- Search Text Input -->
         <div class="flex-1 min-w-48 flex flex-col gap-1">
           <label class="text-sm font-medium text-slate-700">Search:</label>
@@ -49,8 +49,8 @@ export interface SearchFilter {
         <!-- Search Button -->
         <button 
           (click)="onApplyFilter()"
-          class="px-6 py-2 bg-slate-700 text-white font-medium rounded-lg hover:bg-slate-800 transition-colors flex items-center gap-2 whitespace-nowrap">
-          🔍 Search
+          class="px-6 py-2 bg-white text-black font-medium rounded-lg hover:bg-slate-800 transition-colors flex items-center border gap-2 whitespace-nowrap">
+          Search
         </button>
 
         <!-- Clear Button -->

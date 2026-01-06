@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PrintHeader } from '../print-header/print-header';
 import { CommonModule } from '@angular/common';
 
@@ -17,7 +17,11 @@ interface StatementItem {
   templateUrl: './statement-of-account.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class StatementOfAccount {
+export class StatementOfAccount  implements OnInit{
+    ngOnInit(): void {
+    window.print();
+
+  }
   header = {
     dateAsOf: '02-Jan-26',
     billedTo: 'ALDY MAY CALIXTRO',

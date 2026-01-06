@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PrintHeader } from "../print-header/print-header";
 
 @Component({
@@ -7,7 +7,14 @@ import { PrintHeader } from "../print-header/print-header";
   templateUrl: './authority-to-cremate-remains-printing.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class AuthorityToCremateRemainsPrinting {
+export class AuthorityToCremateRemainsPrinting implements OnInit {
+  ngOnInit(): void {
+    window.print();
+
+  }
+    print(): void {
+    window.print();
+  }
   // // Mock data – replace with API response later
   // contract = {
   //   date: '1/2/2026',
@@ -52,7 +59,5 @@ officer: 'Rizalina P. Panes',
     deliveryDate: 'Friday, January 02, 2026',
     contractNo: '12-013950-25'
   };
-  print(): void {
-    window.print();
-  }
+
 }
