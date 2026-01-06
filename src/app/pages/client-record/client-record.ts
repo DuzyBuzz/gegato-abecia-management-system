@@ -115,7 +115,7 @@ export class ClientRecord implements OnInit {
 }
   openEditContract(): void {
 
-      this.router.navigate(['/entry-forms/funeral-service-contract'], {
+      this.router.navigate(['/user/entry-forms/funeral-service-contract'], {
   });
 }
 

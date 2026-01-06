@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './pages/main-layout/main-layout';
 import { ClientRecord } from './pages/client-record/client-record';
 import { FuneralContractEntry } from './entry-forms/funeral-contract-entry/funeral-contract-entry';
+import { BillingEntry } from './entry-forms/billing-entry/billing-entry';
 import { Login } from './pages/auth/login/login';
 import { FuneralServiceContractPrinting } from './printing-forms/funeral-service-contract-printing/funeral-service-contract-printing';
-import { BillingEntry } from './entry-forms/billing-entry/billing-entry';
 import { CremationCertificate } from './printing-forms/cremation-certificate/cremation-certificate';
 import { AuthorityToCremateRemainsPrinting } from './printing-forms/authority-to-cremate-remains-printing/authority-to-cremate-remains-printing';
 import { StatementOfAccount } from './printing-forms/statement-of-account/statement-of-account';
@@ -12,7 +12,16 @@ import { StatementOfAccount } from './printing-forms/statement-of-account/statem
 export const routes: Routes = [
 
   /* ===============================
-   * PUBLIC ROUTES (No layout)
+   * ROOT → LOGIN (LOAD FIRST)
+   * =============================== */
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+
+  /* ===============================
+   * PUBLIC ROUTES
    * =============================== */
   {
     path: 'login',
@@ -23,16 +32,9 @@ export const routes: Routes = [
    * AUTHENTICATED AREA (With layout)
    * =============================== */
   {
-    path: '',
+    path: 'user',
     component: MainLayout,
     children: [
-
-      /* Default page */
-      {
-        path: '',
-        redirectTo: 'client-record',
-        pathMatch: 'full'
-      },
 
       {
         path: 'client-record',
@@ -56,14 +58,13 @@ export const routes: Routes = [
 
     ]
   },
-    /* ===============================
-   * PRINTING FORMS AREA (With layout)
+
+  /* ===============================
+   * PRINTING FORMS
    * =============================== */
   {
     path: 'printing-forms',
     children: [
-
-      /* Default page */
       {
         path: 'funeral-service-contract',
         component: FuneralServiceContractPrinting
@@ -72,27 +73,22 @@ export const routes: Routes = [
         path: 'cremation-certificate',
         component: CremationCertificate
       },
-            {
+      {
         path: 'authority-to-cremate-remains',
         component: AuthorityToCremateRemainsPrinting
       },
-            {
+      {
         path: 'statement-of-account',
         component: StatementOfAccount
       }
-
-
-
     ]
   },
-
 
   /* ===============================
    * FALLBACK
    * =============================== */
   {
     path: '**',
-    redirectTo: 'client-record'
+    redirectTo: 'login'
   }
-  
 ];
