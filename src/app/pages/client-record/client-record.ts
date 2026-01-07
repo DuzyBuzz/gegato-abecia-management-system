@@ -4,7 +4,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TableFilterService, TableState } from '../../services/table-filter.service';
 import { ColumnHeaderDirective, ColumnFilterEvent } from '../../directives/column-header.directive';
-import { FilterMenuComponent } from '../../shared/filter-menu//filter-menu.component';
+import { FilterMenuComponent } from '../../shared/filter-menu/filter-menu.component';
 import { TableSearchComponent, SearchFilter } from '../../shared/table-search/table-search.component';
 import { Observable } from 'rxjs';
 import { AlertComponent } from "../../shared/components/alert/alert.component";
@@ -110,7 +110,7 @@ export class ClientRecord implements OnInit {
 
   openBillingEntry(): void {
 
-      this.router.navigate(['/entry-forms/billing-entry'], {
+      this.router.navigate(['/user/entry-forms/billing-entry'], {
   });
 }
   openEditContract(): void {

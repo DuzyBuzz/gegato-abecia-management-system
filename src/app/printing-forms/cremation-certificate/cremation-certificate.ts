@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { PrintHeader } from '../print-header/print-header';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-cremation-certificate',
-  imports: [PrintHeader],
+  imports: [PrintHeader, CommonModule],
   templateUrl: './cremation-certificate.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class CremationCertificate implements OnInit{
-    ngOnInit(): void {
-    window.print();
+export class CremationCertificate implements AfterViewInit, OnDestroy{
 
-  }
   contract = {
     time: '11:08:13 AM',
     date: '1/2/2026',
@@ -41,7 +39,39 @@ officer: 'Rizalina P. Panes',
     contractNo: '12-013950-25',
     cremationDate: 'January 10, 2026',
   };
+
+  constructor(private location: Location) {}
+
+  /* ================= AUTO PRINT ================= */
+ngAfterViewInit(): void {
+    // Register handler BEFORE printing
+    window.onafterprint = () => {
+      this.goBack();
+    };
+
+    // Delay ensures layout + fonts are ready
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
     print(): void {
     window.print();
   }
+
+
+  /* ================= CLEANUP ================= */
+
+  ngOnDestroy(): void {
+    // Prevent memory leaks
+    window.onafterprint = null;
+  }
+
+  /* ================= NAVIGATION ================= */
+
+  private goBack(): void {
+    // Uses browser history (best UX)
+    this.location.back();
+  }
+
+
 }

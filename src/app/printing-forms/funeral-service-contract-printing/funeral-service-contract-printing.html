@@ -1,4 +1,5 @@
-
+<div class="flex items-center justify-center h-full">
+  
 
 <!-- PRINT PAGE -->
 <div class="print-page text-black text-[12px] leading-tight ">
@@ -22,7 +23,7 @@
 
   <!-- CASSET DETAILS -->
   <div class="grid grid-cols-2 gap-2 mb-3">
-    <div>Casket: <span class="underline-field text-center w-8/12">{{ contract.casket }}</span></div>
+    <div>Casket: <span class="underline-field text-center w-10/12">{{ contract.casket }}</span></div>
     <div>Casket Description:
       <span class="underline-field text-center w-8/12">{{ contract.casketDescription }}</span>
     </div>
@@ -34,7 +35,7 @@
   <!-- DECEASED INFO -->
   <div class="mb-3">
     Name of the Deceased:
-    <span class="underline-field  text-center w-9/12 inline-block">
+    <span class="underline-field  text-center w-9/12">
       {{ contract.deceasedName }}
     </span>
   </div>
@@ -42,7 +43,7 @@
   <div class="grid grid-cols-3 gap-2 w-full mb-3">
     <div>Date of Birth: <span class="underline-field text-center w-7/12">{{ contract.dob }}</span></div>
     <div>Date of Death: <span class="underline-field text-center w-7/12">{{ contract.dod }}</span></div>
-    <div>Age: <span class="underline-field text-center w-7/12">{{ contract.age }}</span></div>
+    <div>Age: <span class="underline-field text-center w-8/12">{{ contract.age }}</span></div>
   </div>
 
   <div class="mb-3">
@@ -118,7 +119,7 @@
   </div>
 
     <div class="grid  gap-2 mb-3">
-    <div>      Address: <span class="underline-field text-center w-10/12">{{ contract.address }}</span></div>
+    <div>      Address: <span class="underline-field text-center w-11/12">{{ contract.address }}</span></div>
   </div>
 
     <div class="grid grid-cols-2 gap-2 mb-3">
@@ -148,14 +149,13 @@
     </div>
     <div>      Officer in Charge</div>
   </div>
-
-</div>
 <!-- PRINT BUTTON (HIDDEN WHEN PRINTING) -->
-<div class="no-print mb-4">
+<div class="no-print mb-4 justify-center flex w-full mt-4">
   <button
     class="px-4 py-2 bg-blue-600 text-white rounded"
     (click)="print()"
   >
-    Print Contract
+Print
   </button>
+</div>
 </div>

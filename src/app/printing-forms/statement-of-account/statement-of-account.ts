@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { PrintHeader } from '../print-header/print-header';
-import { CommonModule } from '@angular/common';
-
+import { CommonModule, Location } from '@angular/common';
 
 interface StatementItem {
   description: string;
@@ -13,15 +12,15 @@ interface StatementItem {
 
 @Component({
   selector: 'app-statement-of-account',
+  standalone: true,
   imports: [PrintHeader, CommonModule],
   templateUrl: './statement-of-account.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class StatementOfAccount  implements OnInit{
-    ngOnInit(): void {
-    window.print();
+export class StatementOfAccount implements AfterViewInit, OnDestroy {
 
-  }
+  /* ================= HEADER ================= */
+
   header = {
     dateAsOf: '02-Jan-26',
     billedTo: 'ALDY MAY CALIXTRO',
@@ -29,6 +28,8 @@ export class StatementOfAccount  implements OnInit{
     deceased: 'NONITO MONTAÑO MAKILAN',
     contractNo: '11-013913-25'
   };
+
+  /* ================= ITEMS ================= */
 
   items: StatementItem[] = [
     { description: 'JR HALF GLASS (METAL)', amount: 45000 },
@@ -45,6 +46,19 @@ export class StatementOfAccount  implements OnInit{
     { description: 'Bank Transfer by Aldy May Luping Calixtro' }
   ];
 
+
+
+  constructor(
+    private location: Location
+
+  ) {
+   }
+
+
+
+
+  /* ================= TOTALS ================= */
+
   get totalAmount(): number {
     return this.items.reduce((sum, i) => sum + (i.amount || 0), 0);
   }
@@ -56,7 +70,10 @@ export class StatementOfAccount  implements OnInit{
   get balanceDue(): number {
     return this.totalAmount - this.totalPayments;
   }
-    contract = {
+
+  /* ================= CONTRACT INFO ================= */
+
+  contract = {
     time: '11:08:13 AM',
     date: '1/2/2026',
 
@@ -68,7 +85,8 @@ export class StatementOfAccount  implements OnInit{
     dob: '02-Sep-40',
     dod: '29-Dec-25',
     age: '85',
-authorizer: 'ALAIN DORIN',
+
+    authorizer: 'ALAIN DORIN',
     address: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
     placeOfDeath: '44N AMES SUBD., MANDURRIAO, ILOILO CITY',
 
@@ -76,7 +94,8 @@ authorizer: 'ALAIN DORIN',
     church: 'CARMELITE SISTERS CHURCH JARO',
     burialDate: 'Wednesday, January 07, 2026',
     cemetery: 'FOREST LAKE MEMORIAL PARK',
-officer: 'Rizalina P. Panes',
+
+    officer: 'Rizalina P. Panes',
 
     contractee: 'ALAIN DORIN',
     relationship: 'SON',
@@ -86,7 +105,30 @@ officer: 'Rizalina P. Panes',
     cremationDate: 'January 10, 2026',
   };
 
-  print(): void {
-    window.print();
+  /* ================= AUTO PRINT ================= */
+ngAfterViewInit(): void {
+    // Register handler BEFORE printing
+    window.onafterprint = () => {
+      this.goBack();
+    };
+
+    // Delay ensures layout + fonts are ready
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+
+  /* ================= CLEANUP ================= */
+
+  ngOnDestroy(): void {
+    // Prevent memory leaks
+    window.onafterprint = null;
+  }
+
+  /* ================= NAVIGATION ================= */
+
+  private goBack(): void {
+    // Uses browser history (best UX)
+    this.location.back();
   }
 }

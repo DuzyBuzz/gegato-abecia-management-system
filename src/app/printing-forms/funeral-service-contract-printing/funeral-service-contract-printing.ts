@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { PrintHeader } from "../print-header/print-header";
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-funeral-service-contract-printing',
-  imports: [PrintHeader],
+  imports: [PrintHeader, CommonModule],
   templateUrl: './funeral-service-contract-printing.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class FuneralServiceContractPrinting  implements OnInit{
-    ngOnInit(): void {
-    window.print();
+export class FuneralServiceContractPrinting  implements AfterViewInit, OnDestroy {
 
-  }
+constructor(private location: Location) {
+   }
+
   contract = {
     time: '11:08:13 AM',
     date: '02-Jan-26',
@@ -39,8 +40,39 @@ export class FuneralServiceContractPrinting  implements OnInit{
     deliveryDate: 'Friday, January 02, 2026',
     contractNo: '12-013950-25'
   };
+  /* ================= AUTO PRINT ================= */
+
+  /* ================= AUTO PRINT ================= */
+
+  ngAfterViewInit(): void {
+    // Register handler BEFORE printing
+    window.onafterprint = () => {
+      this.goBack();
+    };
+
+    // Delay ensures layout + fonts are ready
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+
+  /* ================= CLEANUP ================= */
+
+  ngOnDestroy(): void {
+    // Prevent memory leaks
+    window.onafterprint = null;
+  }
+
+  /* ================= NAVIGATION ================= */
+
+  private goBack(): void {
+    // Uses browser history (best UX)
+    this.location.back();
+  }
+
 
   print(): void {
     window.print();
   }
+
 }

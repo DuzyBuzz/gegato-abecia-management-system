@@ -1,5 +1,6 @@
 
 
+<div class="flex items-center justify-center h-full">
 <!-- PRINT PAGE -->
 <div class="print-page text-black text-[12px] leading-tight">
 
@@ -66,7 +67,7 @@
 
   <div>
     Time:
-    <span class="underline-field w-8/12 text-center inline-block">
+    <span class="underline-field w-10/12 text-center inline-block">
       {{ contract.time }}
     </span>
   </div>
@@ -98,7 +99,7 @@
     <strong>{{ contract.deceasedName }}</strong>
     and that there are no circumstances which will make this act of cremation illegal.
   </p>
-  <p class="text-justify indent-8 mb-6">
+  <p class="text-justify indent-8 mb-20">
     I/We agree to indemnify and hold 
     <strong>CHAPEL OF THE HILLS GEGATO-ABECIA FUNERAL HOMES INC.</strong>, 
     its stockholders, officers, directors, employees and it's assigns, free and harmless from any and all claims,
@@ -142,17 +143,13 @@ Approved By:
     <div>      Chapel of the Hills Gefato Abecia</div>
   </div>
   
-
-</div>
-
-
-
 <!-- PRINT BUTTON (HIDDEN WHEN PRINTING) -->
-<div class="no-print mb-4">
+<div class="no-print mb-4 justify-center  flex w-full mt-4">
   <button
     class="px-4 py-2 bg-blue-600 text-white rounded"
     (click)="print()"
   >
-    Print Contract
+    Print 
   </button>
+</div>
 </div>

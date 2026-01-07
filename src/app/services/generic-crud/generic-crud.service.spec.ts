@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AutocompleteHelper } from './autocomplete-helper';
+import { GenericCrudService } from './generic-crud.service';
 
-describe('AutocompleteHelper', () => {
-  let service: AutocompleteHelper;
+describe('GenericCrudService', () => {
+  let service: GenericCrudService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AutocompleteHelper);
+    service = TestBed.inject(GenericCrudService);
   });
 
   it('should be created', () => {

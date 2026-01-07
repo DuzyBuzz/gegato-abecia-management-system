@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { PrintHeader } from "../print-header/print-header";
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-authority-to-cremate-remains-printing',
-  imports: [PrintHeader],
+  imports: [PrintHeader, CommonModule],
   templateUrl: './authority-to-cremate-remains-printing.html',
   styleUrl: '../print-header/print-header.scss',
 })
-export class AuthorityToCremateRemainsPrinting implements OnInit {
-  ngOnInit(): void {
-    window.print();
+export class AuthorityToCremateRemainsPrinting implements AfterViewInit, OnDestroy{
 
-  }
-    print(): void {
-    window.print();
-  }
+
   // // Mock data – replace with API response later
   // contract = {
   //   date: '1/2/2026',
@@ -59,5 +55,38 @@ officer: 'Rizalina P. Panes',
     deliveryDate: 'Friday, January 02, 2026',
     contractNo: '12-013950-25'
   };
+
+  constructor(private location: Location) {}
+   /* ================= AUTO PRINT ================= */
+ngAfterViewInit(): void {
+    // Register handler BEFORE printing
+    window.onafterprint = () => {
+      this.goBack();
+    };
+
+    // Delay ensures layout + fonts are ready
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+    print(): void {
+    window.print();
+  }
+
+
+  /* ================= CLEANUP ================= */
+
+  ngOnDestroy(): void {
+    // Prevent memory leaks
+    window.onafterprint = null;
+  }
+
+  /* ================= NAVIGATION ================= */
+
+  private goBack(): void {
+    // Uses browser history (best UX)
+    this.location.back();
+  }
+
 
 }

@@ -9,11 +9,34 @@
   "projects": {
     "gegato-abecia-management-system": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss",
+      "standalone": true,
+      "skipTests": false
+    },
+    "@schematics/angular:service": {
+      "type": "service",
+      "skipTests": false
+    },
+    "@schematics/angular:guard": {
+      "type": "guard",
+      "skipTests": false
+    },
+    "@schematics/angular:pipe": {
+      "type": "pipe",
+      "skipTests": false
+    },
+    "@schematics/angular:directive": {
+      "type": "directive",
+      "skipTests": false
+    },
+    "@schematics/angular:resolver": {
+      "type": "resolver",
+      "skipTests": false
+    }
+  },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

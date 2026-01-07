@@ -1,8 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { AuthorityToCremateRemainsPrinting } from "../../printing-forms/authority-to-cremate-remains-printing/authority-to-cremate-remains-printing";
-import { FuneralContractEntry } from "../../entry-forms/funeral-contract-entry/funeral-contract-entry";
+import { AuthorityToCremateRemainsPrinting } from "../../../printing-forms/authority-to-cremate-remains-printing/authority-to-cremate-remains-printing";
+import { FuneralContractEntry } from "../../../entry-forms/funeral-contract-entry/funeral-contract-entry";
 
 @Component({
   selector: 'app-main-layout',

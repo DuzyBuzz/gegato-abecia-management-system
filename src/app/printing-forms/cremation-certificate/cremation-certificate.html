@@ -1,4 +1,6 @@
 
+<div class="flex items-center justify-center h-full">
+  
 
 <!-- PRINT PAGE -->
 <div class="print-page text-black text-[12px] leading-tight">
@@ -17,18 +19,18 @@
 
 
   <!-- INTRO -->
-  <p class="text-justify indent-8 mb-6">
+  <p class="text-justify indent-8 mb-6 space-y-2">
     This certifies that the late 
-    <strong class="underline-field text-center w-[450px]">{{ contract.authorizer }}</strong>
-    {{contract.age}} years old,<br> and a resident of <strong class="underline-field text-center w-[580px]">{{ contract.address }}</strong>,<br>
-    who died last <strong class="underline-field text-center w-[100px]">{{ contract.dod }}</strong> at <strong class="underline-field text-center w-[480px]">{{ contract.placeOfDeath }}</strong>.
+    <strong class="underline-field text-center w-[400px]">{{ contract.authorizer }}</strong>
+    {{contract.age}} years old,<br> and a resident of <strong class="underline-field text-center w-[550px]">{{ contract.address }}</strong>,
+    who died last <strong class="underline-field text-center w-[150px]">{{ contract.cremationDate }}</strong> at <strong class="underline-field text-center w-[400px]">{{ contract.placeOfDeath }}</strong>.
   </p>
-    <p class="text-justify indent-8 mb-4">
-        That the body was mot embalmed and was directly cremated on/last <strong class="underline-field text-center w-[300px]">{{ contract.cremationDate }}</strong><br>
+    <p class="text-justify indent-8 mb-4 space-y-2">
+        That the body was mot embalmed and was directly cremated on/last <strong class="underline-field text-center w-[150px]">{{ contract.cremationDate }}</strong>
         at Chapel of the Hills Gegato Abecia Funeral Homes Inc. Costal Road, Monfort Highway Brgy. Balabago, Jaro, Iloilo City Philippines.
   </p>
-      <p class="text-justify indent-8 mb-4">
-        this certification is issued upon for whatever legal purpose it may serve. <br>
+      <p class="text-justify indent-8 mb-4 space-y-2">
+        this certification is issued upon for whatever legal purpose it may serve.
         Issue on <strong class="underline-field text-center w-[200px]">{{ contract.deliveryDate }}</strong> at Iloilo City, Philippines.
   </p>
  
@@ -50,16 +52,13 @@
     </div></div>
   </div>
 
-</div>
-
-
-
 <!-- PRINT BUTTON (HIDDEN WHEN PRINTING) -->
-<div class="no-print mb-4">
+<div class="no-print mb-4 justify-center  flex w-full mt-4">
   <button
     class="px-4 py-2 bg-blue-600 text-white rounded"
     (click)="print()"
   >
-    Print Contract
+Print
   </button>
+</div>
 </div>
