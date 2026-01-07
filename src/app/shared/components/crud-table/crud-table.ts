@@ -10,20 +10,13 @@ import { GenericCrudService } from '../../../services/generic-crud/generic-crud.
   imports: [CommonModule, FormsModule],
   templateUrl: './crud-table.html',
 })
-export class CrudTableComponent implements OnInit {
+export class CrudTable implements OnInit {
 
   @Input({ required: true }) config!: CrudTableConfig;
 
   data: any[] = [];
-  total = 0;
-
-  page = 1;
-  pageSize = 10;
-
-  sortField = '';
-  sortDir: 'asc' | 'desc' = 'asc';
-
-  filters: Record<string, any> = {};
+  editingRow: any | null = null;
+  newRow: any | null = null;
 
   constructor(private crud: GenericCrudService) {}
 
@@ -33,30 +26,53 @@ export class CrudTableComponent implements OnInit {
 
   load() {
     this.crud.fetch(this.config.resource, {
-      page: this.page,
-      pageSize: this.pageSize,
-      sortField: this.sortField,
-      sortDir: this.sortDir,
-      filters: this.filters
+      page: 1,
+      pageSize: 50
     }).subscribe(res => {
       this.data = res.items;
-      this.total = res.total;
     });
   }
 
-  search(field: string, value: string) {
-    this.filters[field] = value;
-    this.page = 1;
-    this.load();
+  startEdit(row: any) {
+    this.editingRow = { ...row }; // clone for safety
   }
 
-  sort(field: string) {
-    if (this.sortField === field) {
-      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortField = field;
-      this.sortDir = 'asc';
-    }
-    this.load();
+  saveEdit(row: any) {
+    Object.assign(row, this.editingRow);
+    this.editingRow = null;
+
+    // later: call PUT API here
+  }
+
+  cancelEdit() {
+    this.editingRow = null;
+  }
+
+  addNew() {
+    this.newRow = {};
+  }
+
+  saveNew() {
+    this.data.unshift(this.newRow);
+    this.newRow = null;
+
+    // later: call POST API here
+  }
+
+  remove(row: any) {
+    this.data = this.data.filter(r => r !== row);
+
+    // later: call DELETE API here
+  }
+
+  isEditing(row: any): boolean {
+    return this.editingRow && row === this.editingRowOriginal;
+  }
+
+  editingRowOriginal: any;
+
+  startEditRow(row: any) {
+    this.editingRowOriginal = row;
+    this.editingRow = { ...row };
   }
 }

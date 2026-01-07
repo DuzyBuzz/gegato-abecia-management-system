@@ -1,18 +1,23 @@
 <div class="bg-white rounded shadow">
 
   <!-- Header -->
-  <div class="p-4 border-b flex justify-between">
+  <div class="p-4 border-b flex justify-between items-center">
     <h2 class="text-xl font-bold">{{ config.title }}</h2>
+
+    <button *ngIf="config.allowCreate"
+            (click)="addNew()"
+            class="px-3 py-1 bg-blue-600 text-white rounded">
+      + New
+    </button>
   </div>
 
-  <!-- Filters (Excel-like) -->
+  <!-- Filters -->
   <div class="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
     <ng-container *ngFor="let col of config.columns">
       <input
         *ngIf="col.searchable"
         class="border rounded px-2 py-1 text-sm"
         [placeholder]="'Search ' + col.label"
-        (input)="search(col.field, $any($event.target).value)"
       />
     </ng-container>
   </div>
@@ -21,22 +26,120 @@
   <table class="w-full border-t text-sm">
     <thead>
       <tr>
-        <th
-          *ngFor="let col of config.columns"
-          class="p-3 text-left cursor-pointer select-none"
-          (click)="col.sortable && sort(col.field)"
-        >
+        <th *ngFor="let col of config.columns"
+            class="p-3 text-left">
           {{ col.label }}
         </th>
+        <th class="p-3">Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let row of data" class="border-t hover:bg-slate-50">
+
+      <!-- New Row -->
+      <tr *ngIf="newRow" class="bg-green-50">
         <td *ngFor="let col of config.columns" class="p-3">
-          {{ row[col.field] }}
+          <ng-container [ngSwitch]="col.type">
+
+            <input *ngSwitchCase="'text'"
+                   [(ngModel)]="newRow[col.field]"
+                   class="border px-2 py-1 w-full" />
+
+            <input *ngSwitchCase="'number'"
+                   type="number"
+                   [(ngModel)]="newRow[col.field]"
+                   class="border px-2 py-1 w-full" />
+
+            <input *ngSwitchCase="'date'"
+                   type="date"
+                   [(ngModel)]="newRow[col.field]"
+                   class="border px-2 py-1 w-full" />
+
+            <select *ngSwitchCase="'select'"
+                    [(ngModel)]="newRow[col.field]"
+                    class="border px-2 py-1 w-full">
+              <option *ngFor="let opt of col.options"
+                      [value]="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+
+          </ng-container>
+        </td>
+        <td class="p-3">
+          <button (click)="saveNew()" class="text-green-700">Save</button>
         </td>
       </tr>
+
+      <!-- Existing Rows -->
+      <tr *ngFor="let row of data" class="border-t hover:bg-slate-50">
+
+        <td *ngFor="let col of config.columns" class="p-3">
+
+          <ng-container *ngIf="editingRowOriginal === row; else view">
+
+            <ng-container [ngSwitch]="col.type">
+
+              <input *ngSwitchCase="'text'"
+                     [(ngModel)]="editingRow[col.field]"
+                     class="border px-2 py-1 w-full" />
+
+              <input *ngSwitchCase="'number'"
+                     type="number"
+                     [(ngModel)]="editingRow[col.field]"
+                     class="border px-2 py-1 w-full" />
+
+              <input *ngSwitchCase="'date'"
+                     type="date"
+                     [(ngModel)]="editingRow[col.field]"
+                     class="border px-2 py-1 w-full" />
+
+              <select *ngSwitchCase="'select'"
+                      [(ngModel)]="editingRow[col.field]"
+                      class="border px-2 py-1 w-full">
+                <option *ngFor="let opt of col.options"
+                        [value]="opt.value">
+                  {{ opt.label }}
+                </option>
+              </select>
+
+            </ng-container>
+
+          </ng-container>
+
+          <ng-template #view>
+            {{ row[col.field] }}
+          </ng-template>
+
+        </td>
+
+        <td class="p-3 space-x-2">
+          <button *ngIf="editingRowOriginal !== row"
+                  (click)="startEditRow(row)"
+                  class="text-blue-600">
+            Edit
+          </button>
+
+          <button *ngIf="editingRowOriginal === row"
+                  (click)="saveEdit(row)"
+                  class="text-green-600">
+            Save
+          </button>
+
+          <button *ngIf="editingRowOriginal === row"
+                  (click)="cancelEdit()"
+                  class="text-gray-500">
+            Cancel
+          </button>
+
+          <button *ngIf="config.allowDelete"
+                  (click)="remove(row)"
+                  class="text-red-600">
+            Delete
+          </button>
+        </td>
+      </tr>
+
     </tbody>
   </table>
 

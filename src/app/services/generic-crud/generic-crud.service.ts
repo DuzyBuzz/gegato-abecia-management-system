@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class GenericCrudService {
-
-  // 🔁 toggle this when backend is ready
-  private readonly USE_MOCK = true;
 
   constructor(private http: HttpClient) {}
 
@@ -21,32 +19,35 @@ export class GenericCrudService {
     }
   ): Observable<{ items: any[]; total: number }> {
 
-    if (this.USE_MOCK) {
+    /** MOCK MODE */
+    if (environment.useMockApi) {
       return this.http.get<{ items: any[]; total: number }>(
-        `/assets/mock/${resource}.mock.json`
+        `${environment.mockBasePath}/${resource}.mock.json`
       );
     }
 
-    // REAL API (later)
+    /** REAL API MODE */
     let params = new HttpParams()
       .set('page', query.page)
       .set('pageSize', query.pageSize);
 
     if (query.sortField) {
-      params = params.set('sort', query.sortField)
-                     .set('dir', query.sortDir || 'asc');
+      params = params
+        .set('sort', query.sortField)
+        .set('dir', query.sortDir || 'asc');
     }
 
     if (query.filters) {
       Object.keys(query.filters).forEach(key => {
-        if (query.filters![key]) {
-          params = params.set(`filter[${key}]`, query.filters![key]);
+        const value = query.filters![key];
+        if (value !== null && value !== undefined && value !== '') {
+          params = params.set(`filter[${key}]`, value);
         }
       });
     }
 
     return this.http.get<{ items: any[]; total: number }>(
-      `/api/${resource}`,
+      `${environment.apiBaseUrl}/${resource}`,
       { params }
     );
   }

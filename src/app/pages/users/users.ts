@@ -1,24 +1,29 @@
 import { Component } from '@angular/core';
 import { CrudTableConfig } from '../../models/crud-table-config.model';
-import { CrudTableComponent } from '../../shared/components/crud-table/crud-table';
+import { CrudTable } from '../../shared/components/crud-table/crud-table';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CrudTableComponent],
+  imports: [CrudTable],
   templateUrl: './users.html'
 })
 export class Users {
 
   /**
-   * This page ONLY defines metadata.
-   * Data loading is handled by CrudTableComponent.
+   * Page responsibility:
+   * - Define title
+   * - Define API resource
+   * - Define field behavior (Excel-like)
+   *
+   * NO data fetching
+   * NO CRUD logic
    */
   tableConfig: CrudTableConfig = {
     title: 'Users Management',
     resource: 'users',
 
-    allowCreate: true,
+    allowCreate: false,
     allowEdit: true,
     allowDelete: false,
 
@@ -35,21 +40,27 @@ export class Users {
         field: 'email',
         label: 'Email',
         type: 'text',
-        searchable: true,
+        searchable: false,
         editable: true
       },
       {
         field: 'role',
         label: 'Role',
-        type: 'text',
+        type: 'select',              // ✅ Excel-style dropdown
         searchable: true,
-        editable: true
+        editable: true,
+        options: [
+          { label: 'Admin', value: 'ADMIN' },
+          { label: 'Staff', value: 'STAFF' },
+          { label: 'User', value: 'USER' }
+        ]
       },
       {
         field: 'createdAt',
         label: 'Created Date',
-        type: 'date',
-        sortable: true
+        type: 'date',                // ✅ Excel-style date picker
+        sortable: true,
+        editable: false              // ❗ Usually not editable
       }
     ]
   };
